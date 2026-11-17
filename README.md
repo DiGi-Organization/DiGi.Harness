@@ -5,6 +5,7 @@ A natural-language harness for DiGi applications: a protocol-agnostic client tha
 - **Protocols:** the OpenAI Chat Completions protocol and the Anthropic Messages protocol, both over raw HTTP with streaming (SSE). Any compatible endpoint works by base URL: Anthropic, DeepSeek, Xiaomi MiMo, and local servers such as LM Studio or Strata.
 - **Configuration:** a JSON file, `Harness.json`, listing providers, models and limits. It denies by default, and keys belong in `user files/` only.
 - **Conversation model:** text, thinking, tool use and tool result blocks, kept append-only so thinking blocks replay unchanged.
+- **Export:** `Create.ConversationExport` / `Query.Export` build a shareable copy of a conversation — `Messages` (text only) or `Full` (complete thinking, tool calls and tool results); signatures and redacted thinking never leave.
 - **Agent loop:** `Modify.RunTurnAsync` streams events (steps, thinking, tool calls, text, usage, elapsed time) and runs tools in parallel, up to a configured iteration limit.
 - **OpenAPI tools:** `Create.OpenApiIndex`, `DescribeEndpointTool` and `CallEndpointTool` expose a Swagger-described WebAPI to the model, restricted to a path prefix and to GET or allowlisted POST endpoints.
 

@@ -66,6 +66,7 @@ Derived
 ↳ [CompletionState](DiGi.Harness.Classes.md#DiGi.Harness.Classes.CompletionState 'DiGi\.Harness\.Classes\.CompletionState')  
 ↳ [ContentState](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ContentState 'DiGi\.Harness\.Classes\.ContentState')  
 ↳ [Conversation](DiGi.Harness.Classes.md#DiGi.Harness.Classes.Conversation 'DiGi\.Harness\.Classes\.Conversation')  
+↳ [ConversationExport](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ConversationExport 'DiGi\.Harness\.Classes\.ConversationExport')  
 ↳ [DescribeEndpointTool](DiGi.Harness.Classes.md#DiGi.Harness.Classes.DescribeEndpointTool 'DiGi\.Harness\.Classes\.DescribeEndpointTool')  
 ↳ [HarnessConfiguration](DiGi.Harness.Classes.md#DiGi.Harness.Classes.HarnessConfiguration 'DiGi\.Harness\.Classes\.HarnessConfiguration')  
 ↳ [HarnessEvent](DiGi.Harness.Classes.md#DiGi.Harness.Classes.HarnessEvent 'DiGi\.Harness\.Classes\.HarnessEvent')  
@@ -99,6 +100,7 @@ public interface IHarnessSerializableObject : DiGi.Harness.Interfaces.IHarnessOb
 
 Derived  
 ↳ [Conversation](DiGi.Harness.Classes.md#DiGi.Harness.Classes.Conversation 'DiGi\.Harness\.Classes\.Conversation')  
+↳ [ConversationExport](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ConversationExport 'DiGi\.Harness\.Classes\.ConversationExport')  
 ↳ [HarnessConfiguration](DiGi.Harness.Classes.md#DiGi.Harness.Classes.HarnessConfiguration 'DiGi\.Harness\.Classes\.HarnessConfiguration')  
 ↳ [HarnessEvent](DiGi.Harness.Classes.md#DiGi.Harness.Classes.HarnessEvent 'DiGi\.Harness\.Classes\.HarnessEvent')  
 ↳ [Message](DiGi.Harness.Classes.md#DiGi.Harness.Classes.Message 'DiGi\.Harness\.Classes\.Message')  

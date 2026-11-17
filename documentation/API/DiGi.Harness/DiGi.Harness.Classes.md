@@ -630,6 +630,164 @@ internal void Append(DiGi.Harness.Classes.Message message);
 
 The message to append\.
 
+<a name='DiGi.Harness.Classes.ConversationExport'></a>
+
+## ConversationExport Class
+
+A conversation exported to a file: the filtered conversation and the metadata needed to match it to a build\.
+
+Build one with [ConversationExport\(Conversation, ExportMode, DateTimeOffset, string\)](DiGi.Harness.md#DiGi.Harness.Create.ConversationExport(DiGi.Harness.Classes.Conversation,DiGi.Harness.Enums.ExportMode,System.DateTimeOffset,string) 'DiGi\.Harness\.Create\.ConversationExport\(DiGi\.Harness\.Classes\.Conversation, DiGi\.Harness\.Enums\.ExportMode, System\.DateTimeOffset, string\)').
+
+```csharp
+public class ConversationExport : DiGi.Core.Classes.SerializableObject, DiGi.Harness.Interfaces.IHarnessSerializableObject, DiGi.Harness.Interfaces.IHarnessObject, DiGi.Core.Interfaces.IObject, DiGi.Core.Interfaces.ISerializableObject, DiGi.Core.Interfaces.ICloneableObject<DiGi.Core.Interfaces.ISerializableObject>, DiGi.Core.Interfaces.ICloneableObject
+```
+
+Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → [DiGi\.Core\.Classes\.Object](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.object 'DiGi\.Core\.Classes\.Object') → [DiGi\.Core\.Classes\.SerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.classes.serializableobject 'DiGi\.Core\.Classes\.SerializableObject') → ConversationExport
+
+Implements [IHarnessSerializableObject](DiGi.Harness.Interfaces.md#DiGi.Harness.Interfaces.IHarnessSerializableObject 'DiGi\.Harness\.Interfaces\.IHarnessSerializableObject'), [IHarnessObject](DiGi.Harness.Interfaces.md#DiGi.Harness.Interfaces.IHarnessObject 'DiGi\.Harness\.Interfaces\.IHarnessObject'), [DiGi\.Core\.Interfaces\.IObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iobject 'DiGi\.Core\.Interfaces\.IObject'), [DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject'), [DiGi\.Core\.Interfaces\.ICloneableObject&lt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1')[DiGi\.Core\.Interfaces\.ISerializableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.iserializableobject 'DiGi\.Core\.Interfaces\.ISerializableObject')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject-1 'DiGi\.Core\.Interfaces\.ICloneableObject\`1'), [DiGi\.Core\.Interfaces\.ICloneableObject](https://learn.microsoft.com/en-us/dotnet/api/digi.core.interfaces.icloneableobject 'DiGi\.Core\.Interfaces\.ICloneableObject')
+### Constructors
+
+<a name='DiGi.Harness.Classes.ConversationExport.ConversationExport(DiGi.Harness.Classes.ConversationExport)'></a>
+
+## ConversationExport\(ConversationExport\) Constructor
+
+Initializes a new instance of the [ConversationExport](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ConversationExport 'DiGi\.Harness\.Classes\.ConversationExport') class by copying another instance\.
+
+```csharp
+public ConversationExport(DiGi.Harness.Classes.ConversationExport? conversationExport);
+```
+#### Parameters
+
+<a name='DiGi.Harness.Classes.ConversationExport.ConversationExport(DiGi.Harness.Classes.ConversationExport).conversationExport'></a>
+
+`conversationExport` [ConversationExport](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ConversationExport 'DiGi\.Harness\.Classes\.ConversationExport')
+
+The instance to copy from\.
+
+<a name='DiGi.Harness.Classes.ConversationExport.ConversationExport(DiGi.Harness.Enums.ExportMode,System.DateTimeOffset,string,string,DiGi.Harness.Classes.Conversation)'></a>
+
+## ConversationExport\(ExportMode, DateTimeOffset, string, string, Conversation\) Constructor
+
+Initializes a new instance of the [ConversationExport](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ConversationExport 'DiGi\.Harness\.Classes\.ConversationExport') class\.
+
+```csharp
+public ConversationExport(DiGi.Harness.Enums.ExportMode mode, System.DateTimeOffset exportedAt, string? providerName, string? version, DiGi.Harness.Classes.Conversation? conversation);
+```
+#### Parameters
+
+<a name='DiGi.Harness.Classes.ConversationExport.ConversationExport(DiGi.Harness.Enums.ExportMode,System.DateTimeOffset,string,string,DiGi.Harness.Classes.Conversation).mode'></a>
+
+`mode` [ExportMode](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ExportMode 'DiGi\.Harness\.Enums\.ExportMode')
+
+The export mode used\.
+
+<a name='DiGi.Harness.Classes.ConversationExport.ConversationExport(DiGi.Harness.Enums.ExportMode,System.DateTimeOffset,string,string,DiGi.Harness.Classes.Conversation).exportedAt'></a>
+
+`exportedAt` [System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')
+
+The time of the export\.
+
+<a name='DiGi.Harness.Classes.ConversationExport.ConversationExport(DiGi.Harness.Enums.ExportMode,System.DateTimeOffset,string,string,DiGi.Harness.Classes.Conversation).providerName'></a>
+
+`providerName` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The name of the provider the conversation is locked to\.
+
+<a name='DiGi.Harness.Classes.ConversationExport.ConversationExport(DiGi.Harness.Enums.ExportMode,System.DateTimeOffset,string,string,DiGi.Harness.Classes.Conversation).version'></a>
+
+`version` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The version of the harness that produced the export\.
+
+<a name='DiGi.Harness.Classes.ConversationExport.ConversationExport(DiGi.Harness.Enums.ExportMode,System.DateTimeOffset,string,string,DiGi.Harness.Classes.Conversation).conversation'></a>
+
+`conversation` [Conversation](DiGi.Harness.Classes.md#DiGi.Harness.Classes.Conversation 'DiGi\.Harness\.Classes\.Conversation')
+
+The filtered conversation\.
+
+<a name='DiGi.Harness.Classes.ConversationExport.ConversationExport(System.Text.Json.Nodes.JsonObject)'></a>
+
+## ConversationExport\(JsonObject\) Constructor
+
+Initializes a new instance of the [ConversationExport](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ConversationExport 'DiGi\.Harness\.Classes\.ConversationExport') class from a JSON object\.
+
+```csharp
+public ConversationExport(System.Text.Json.Nodes.JsonObject? jsonObject);
+```
+#### Parameters
+
+<a name='DiGi.Harness.Classes.ConversationExport.ConversationExport(System.Text.Json.Nodes.JsonObject).jsonObject'></a>
+
+`jsonObject` [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')
+
+The JSON object to read from\.
+### Properties
+
+<a name='DiGi.Harness.Classes.ConversationExport.Conversation'></a>
+
+## ConversationExport\.Conversation Property
+
+Gets the filtered conversation\.
+
+```csharp
+public DiGi.Harness.Classes.Conversation? Conversation { get; }
+```
+
+#### Property Value
+[Conversation](DiGi.Harness.Classes.md#DiGi.Harness.Classes.Conversation 'DiGi\.Harness\.Classes\.Conversation')
+
+<a name='DiGi.Harness.Classes.ConversationExport.ExportedAt'></a>
+
+## ConversationExport\.ExportedAt Property
+
+Gets the time of the export\.
+
+```csharp
+public System.DateTimeOffset ExportedAt { get; }
+```
+
+#### Property Value
+[System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')
+
+<a name='DiGi.Harness.Classes.ConversationExport.Mode'></a>
+
+## ConversationExport\.Mode Property
+
+Gets the export mode used\.
+
+```csharp
+public DiGi.Harness.Enums.ExportMode Mode { get; }
+```
+
+#### Property Value
+[ExportMode](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ExportMode 'DiGi\.Harness\.Enums\.ExportMode')
+
+<a name='DiGi.Harness.Classes.ConversationExport.ProviderName'></a>
+
+## ConversationExport\.ProviderName Property
+
+Gets the name of the provider the conversation is locked to\.
+
+```csharp
+public string? ProviderName { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+<a name='DiGi.Harness.Classes.ConversationExport.Version'></a>
+
+## ConversationExport\.Version Property
+
+Gets the version of the harness that produced the export\.
+
+```csharp
+public string? Version { get; }
+```
+
+#### Property Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
 <a name='DiGi.Harness.Classes.DescribeEndpointTool'></a>
 
 ## DescribeEndpointTool Class

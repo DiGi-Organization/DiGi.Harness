@@ -97,6 +97,35 @@ The model kept calling tools beyond the configured iteration limit\.
 
 The provider configuration is incomplete \(no base URI, model or protocol\)\.
 
+<a name='DiGi.Harness.Enums.ExportMode'></a>
+
+## ExportMode Enum
+
+How much of a conversation an export contains\.
+
+```csharp
+public enum ExportMode
+```
+### Fields
+
+<a name='DiGi.Harness.Enums.ExportMode.Undefined'></a>
+
+`Undefined` 0
+
+Not set; treated as [Messages](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ExportMode.Messages 'DiGi\.Harness\.Enums\.ExportMode\.Messages')\.
+
+<a name='DiGi.Harness.Enums.ExportMode.Messages'></a>
+
+`Messages` 1
+
+The user and assistant text only\.
+
+<a name='DiGi.Harness.Enums.ExportMode.Full'></a>
+
+`Full` 2
+
+The text, the complete thinking text, the tool calls and the tool results\.
+
 <a name='DiGi.Harness.Enums.Protocol'></a>
 
 ## Protocol Enum

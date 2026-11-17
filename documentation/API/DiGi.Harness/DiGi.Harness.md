@@ -151,6 +151,47 @@ public static class Create
 Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → Create
 ### Methods
 
+<a name='DiGi.Harness.Create.ConversationExport(DiGi.Harness.Classes.Conversation,DiGi.Harness.Enums.ExportMode,System.DateTimeOffset,string)'></a>
+
+## Create\.ConversationExport\(Conversation, ExportMode, DateTimeOffset, string\) Method
+
+Builds the export of a conversation\.
+
+The conversation is filtered with [Export\(this Conversation, ExportMode\)](DiGi.Harness.md#DiGi.Harness.Query.Export(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Enums.ExportMode) 'DiGi\.Harness\.Query\.Export\(this DiGi\.Harness\.Classes\.Conversation, DiGi\.Harness\.Enums\.ExportMode\)'); [Undefined](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ExportMode.Undefined 'DiGi\.Harness\.Enums\.ExportMode\.Undefined') is stored as [Messages](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ExportMode.Messages 'DiGi\.Harness\.Enums\.ExportMode\.Messages').
+
+```csharp
+public static DiGi.Harness.Classes.ConversationExport? ConversationExport(DiGi.Harness.Classes.Conversation? conversation, DiGi.Harness.Enums.ExportMode exportMode, System.DateTimeOffset exportedAt, string? version);
+```
+#### Parameters
+
+<a name='DiGi.Harness.Create.ConversationExport(DiGi.Harness.Classes.Conversation,DiGi.Harness.Enums.ExportMode,System.DateTimeOffset,string).conversation'></a>
+
+`conversation` [Conversation](DiGi.Harness.Classes.md#DiGi.Harness.Classes.Conversation 'DiGi\.Harness\.Classes\.Conversation')
+
+The conversation\.
+
+<a name='DiGi.Harness.Create.ConversationExport(DiGi.Harness.Classes.Conversation,DiGi.Harness.Enums.ExportMode,System.DateTimeOffset,string).exportMode'></a>
+
+`exportMode` [ExportMode](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ExportMode 'DiGi\.Harness\.Enums\.ExportMode')
+
+The export mode\.
+
+<a name='DiGi.Harness.Create.ConversationExport(DiGi.Harness.Classes.Conversation,DiGi.Harness.Enums.ExportMode,System.DateTimeOffset,string).exportedAt'></a>
+
+`exportedAt` [System\.DateTimeOffset](https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset 'System\.DateTimeOffset')
+
+The time of the export\.
+
+<a name='DiGi.Harness.Create.ConversationExport(DiGi.Harness.Classes.Conversation,DiGi.Harness.Enums.ExportMode,System.DateTimeOffset,string).version'></a>
+
+`version` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
+The version of the harness that produced the export \(for example the assembly informational version\)\.
+
+#### Returns
+[ConversationExport](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ConversationExport 'DiGi\.Harness\.Classes\.ConversationExport')  
+The export, or null when [conversation](DiGi.Harness.md#DiGi.Harness.Create.ConversationExport(DiGi.Harness.Classes.Conversation,DiGi.Harness.Enums.ExportMode,System.DateTimeOffset,string).conversation 'DiGi\.Harness\.Create\.ConversationExport\(DiGi\.Harness\.Classes\.Conversation, DiGi\.Harness\.Enums\.ExportMode, System\.DateTimeOffset, string\)\.conversation') is null\.
+
 <a name='DiGi.Harness.Create.HarnessConfiguration(string)'></a>
 
 ## Create\.HarnessConfiguration\(string\) Method
@@ -530,6 +571,35 @@ The provider\.
 #### Returns
 [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')  
 The API key, or null when none is configured \(a local server\)\.
+
+<a name='DiGi.Harness.Query.Export(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Enums.ExportMode)'></a>
+
+## Query\.Export\(this Conversation, ExportMode\) Method
+
+Builds the copy of a conversation written to an export file\.
+
+[Messages](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ExportMode.Messages 'DiGi\.Harness\.Enums\.ExportMode\.Messages') (and [Undefined](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ExportMode.Undefined 'DiGi\.Harness\.Enums\.ExportMode\.Undefined')) keeps the text only; [Full](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ExportMode.Full 'DiGi\.Harness\.Enums\.ExportMode\.Full') also keeps the complete thinking text, the tool calls and the tool results. Thinking signatures and redacted thinking data are never copied. A message left without content is dropped; order and roles are kept. The source conversation is not modified.
+
+```csharp
+public static DiGi.Harness.Classes.Conversation? Export(this DiGi.Harness.Classes.Conversation? conversation, DiGi.Harness.Enums.ExportMode exportMode);
+```
+#### Parameters
+
+<a name='DiGi.Harness.Query.Export(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Enums.ExportMode).conversation'></a>
+
+`conversation` [Conversation](DiGi.Harness.Classes.md#DiGi.Harness.Classes.Conversation 'DiGi\.Harness\.Classes\.Conversation')
+
+The conversation\.
+
+<a name='DiGi.Harness.Query.Export(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Enums.ExportMode).exportMode'></a>
+
+`exportMode` [ExportMode](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ExportMode 'DiGi\.Harness\.Enums\.ExportMode')
+
+The export mode\.
+
+#### Returns
+[Conversation](DiGi.Harness.Classes.md#DiGi.Harness.Classes.Conversation 'DiGi\.Harness\.Classes\.Conversation')  
+The filtered copy, or null when [conversation](DiGi.Harness.md#DiGi.Harness.Query.Export(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Enums.ExportMode).conversation 'DiGi\.Harness\.Query\.Export\(this DiGi\.Harness\.Classes\.Conversation, DiGi\.Harness\.Enums\.ExportMode\)\.conversation') is null\.
 
 <a name='DiGi.Harness.Query.Input(thisDiGi.Harness.Classes.ToolUseContent)'></a>
 
