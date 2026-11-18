@@ -265,3 +265,32 @@ One short line per thinking block is sent once the block is complete\.
 `None` 3
 
 No thinking is sent at all\.
+
+<a name='DiGi.Harness.Enums.ToolChoice'></a>
+
+## ToolChoice Enum
+
+Whether the model may call the tools offered in a request\. The tools stay in the request either way: Anthropic rejects a conversation holding tool calls and results when no tools are defined\.
+
+```csharp
+public enum ToolChoice
+```
+### Fields
+
+<a name='DiGi.Harness.Enums.ToolChoice.Undefined'></a>
+
+`Undefined` 0
+
+Not set; treated as [Auto](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ToolChoice.Auto 'DiGi\.Harness\.Enums\.ToolChoice\.Auto')\.
+
+<a name='DiGi.Harness.Enums.ToolChoice.Auto'></a>
+
+`Auto` 1
+
+The model decides whether to call a tool \(`tool_choice: auto`\)\.
+
+<a name='DiGi.Harness.Enums.ToolChoice.None'></a>
+
+`None` 2
+
+The model must answer without calling a tool \(`tool_choice: none`\)\. Some OpenAI\-compatible servers ignore it, so a tool call can still come back\.

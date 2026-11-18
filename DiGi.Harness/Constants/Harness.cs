@@ -70,9 +70,14 @@ namespace DiGi.Harness.Constants
     public static class Default
     {
         /// <summary>
-        /// The default maximum number of model requests in one turn.
+        /// The default maximum number of steps in one turn in which the model may call tools. A model still calling tools after the last of them gets one more request with tool use turned off (<see cref="FinalStepPrompt"/>), so a turn makes at most this many requests plus one.
         /// </summary>
         public const int MaxToolIterations = 12;
+
+        /// <summary>
+        /// The instruction appended to the system prompt of the one tool-less request that follows the last allowed tool step, asking the model to answer from what the tools already returned.
+        /// </summary>
+        public const string FinalStepPrompt = "## Tool budget used\n\nThe tool budget for this turn is used up and no more tools can be called. Answer the user now, in the language of the question, from the tool results above only: what was found, and what is still unknown or unchecked. Do not invent figures and do not call tools.";
 
         /// <summary>
         /// The default maximum number of characters of one tool result returned to the model.

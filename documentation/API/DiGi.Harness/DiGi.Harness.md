@@ -14,42 +14,48 @@ public static class Convert
 Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → Convert
 ### Methods
 
-<a name='DiGi.Harness.Convert.ToAnthropic_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string)'></a>
+<a name='DiGi.Harness.Convert.ToAnthropic_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string,DiGi.Harness.Enums.ToolChoice)'></a>
 
-## Convert\.ToAnthropic\_JsonObject\(this Conversation, ProviderConfiguration, IEnumerable\<ToolDefinition\>, string\) Method
+## Convert\.ToAnthropic\_JsonObject\(this Conversation, ProviderConfiguration, IEnumerable\<ToolDefinition\>, string, ToolChoice\) Method
 
 Builds the body of a streamed Anthropic Messages request \(`POST /v1/messages`\) from a conversation\.
 
-The system prompt is one cached text block (`cache_control: ephemeral`), so the tools and the system prompt form a stable cached prefix. Tools use `tool_choice: auto` (forced tool choice is rejected by current models). Thinking is `{"type":"adaptive","display":"summarized"}` when [Thinking](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ProviderConfiguration.Thinking 'DiGi\.Harness\.Classes\.ProviderConfiguration\.Thinking') is set; effort goes to `output_config.effort`; `fallbacks: "default"` is sent when [AnthropicFallbacks](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ProviderConfiguration.AnthropicFallbacks 'DiGi\.Harness\.Classes\.ProviderConfiguration\.AnthropicFallbacks') is set. Thinking blocks are replayed unchanged with their signatures.
+The system prompt is one cached text block (`cache_control: ephemeral`), so the tools and the system prompt form a stable cached prefix. Tools use `tool_choice: auto`, or `tool_choice: none` for [None](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ToolChoice.None 'DiGi\.Harness\.Enums\.ToolChoice\.None') (forced tool choice is rejected by current models). Thinking is `{"type":"adaptive","display":"summarized"}` when [Thinking](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ProviderConfiguration.Thinking 'DiGi\.Harness\.Classes\.ProviderConfiguration\.Thinking') is set; effort goes to `output_config.effort`; `fallbacks: "default"` is sent when [AnthropicFallbacks](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ProviderConfiguration.AnthropicFallbacks 'DiGi\.Harness\.Classes\.ProviderConfiguration\.AnthropicFallbacks') is set. Thinking blocks are replayed unchanged with their signatures.
 
 ```csharp
-public static System.Text.Json.Nodes.JsonObject? ToAnthropic_JsonObject(this DiGi.Harness.Classes.Conversation? conversation, DiGi.Harness.Classes.ProviderConfiguration? providerConfiguration, System.Collections.Generic.IEnumerable<DiGi.Harness.Classes.ToolDefinition>? toolDefinitions, string? systemPrompt);
+public static System.Text.Json.Nodes.JsonObject? ToAnthropic_JsonObject(this DiGi.Harness.Classes.Conversation? conversation, DiGi.Harness.Classes.ProviderConfiguration? providerConfiguration, System.Collections.Generic.IEnumerable<DiGi.Harness.Classes.ToolDefinition>? toolDefinitions, string? systemPrompt, DiGi.Harness.Enums.ToolChoice toolChoice=DiGi.Harness.Enums.ToolChoice.Undefined);
 ```
 #### Parameters
 
-<a name='DiGi.Harness.Convert.ToAnthropic_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string).conversation'></a>
+<a name='DiGi.Harness.Convert.ToAnthropic_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string,DiGi.Harness.Enums.ToolChoice).conversation'></a>
 
 `conversation` [Conversation](DiGi.Harness.Classes.md#DiGi.Harness.Classes.Conversation 'DiGi\.Harness\.Classes\.Conversation')
 
 The conversation\.
 
-<a name='DiGi.Harness.Convert.ToAnthropic_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string).providerConfiguration'></a>
+<a name='DiGi.Harness.Convert.ToAnthropic_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string,DiGi.Harness.Enums.ToolChoice).providerConfiguration'></a>
 
 `providerConfiguration` [ProviderConfiguration](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ProviderConfiguration 'DiGi\.Harness\.Classes\.ProviderConfiguration')
 
 The provider\.
 
-<a name='DiGi.Harness.Convert.ToAnthropic_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string).toolDefinitions'></a>
+<a name='DiGi.Harness.Convert.ToAnthropic_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string,DiGi.Harness.Enums.ToolChoice).toolDefinitions'></a>
 
 `toolDefinitions` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[ToolDefinition](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ToolDefinition 'DiGi\.Harness\.Classes\.ToolDefinition')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
 
 The tools offered to the model, or null for none\.
 
-<a name='DiGi.Harness.Convert.ToAnthropic_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string).systemPrompt'></a>
+<a name='DiGi.Harness.Convert.ToAnthropic_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string,DiGi.Harness.Enums.ToolChoice).systemPrompt'></a>
 
 `systemPrompt` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The system prompt, or null for none\.
+
+<a name='DiGi.Harness.Convert.ToAnthropic_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string,DiGi.Harness.Enums.ToolChoice).toolChoice'></a>
+
+`toolChoice` [ToolChoice](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ToolChoice 'DiGi\.Harness\.Enums\.ToolChoice')
+
+Whether the model may call the tools; [Undefined](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ToolChoice.Undefined 'DiGi\.Harness\.Enums\.ToolChoice\.Undefined') is [Auto](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ToolChoice.Auto 'DiGi\.Harness\.Enums\.ToolChoice\.Auto')\. Ignored when no tools are offered\.
 
 #### Returns
 [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')  
@@ -99,42 +105,48 @@ The provider value, such as `end_turn`, `tool_use`, `stop` or `tool_calls`\.
 [StopReason](DiGi.Harness.Enums.md#DiGi.Harness.Enums.StopReason 'DiGi\.Harness\.Enums\.StopReason')  
 The stop reason; [Undefined](DiGi.Harness.Enums.md#DiGi.Harness.Enums.StopReason.Undefined 'DiGi\.Harness\.Enums\.StopReason\.Undefined') for null or empty, [Other](DiGi.Harness.Enums.md#DiGi.Harness.Enums.StopReason.Other 'DiGi\.Harness\.Enums\.StopReason\.Other') for an unknown value\.
 
-<a name='DiGi.Harness.Convert.ToOpenAI_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string)'></a>
+<a name='DiGi.Harness.Convert.ToOpenAI_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string,DiGi.Harness.Enums.ToolChoice)'></a>
 
-## Convert\.ToOpenAI\_JsonObject\(this Conversation, ProviderConfiguration, IEnumerable\<ToolDefinition\>, string\) Method
+## Convert\.ToOpenAI\_JsonObject\(this Conversation, ProviderConfiguration, IEnumerable\<ToolDefinition\>, string, ToolChoice\) Method
 
 Builds the body of a streamed OpenAI Chat Completions request \(`POST /chat/completions`\) from a conversation\.
 
 Tool results become `role: tool` messages placed before any user text of the same message. Assistant tool calls carry their input as the `arguments` string. Reasoning is replayed as `reasoning_content` only when [ReplayReasoning](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ProviderConfiguration.ReplayReasoning 'DiGi\.Harness\.Classes\.ProviderConfiguration\.ReplayReasoning') is set (DeepSeek thinking mode with tools needs it; most servers ignore or reject it). Effort goes to `reasoning_effort`; usage is requested with `stream_options.include_usage`.
 
 ```csharp
-public static System.Text.Json.Nodes.JsonObject? ToOpenAI_JsonObject(this DiGi.Harness.Classes.Conversation? conversation, DiGi.Harness.Classes.ProviderConfiguration? providerConfiguration, System.Collections.Generic.IEnumerable<DiGi.Harness.Classes.ToolDefinition>? toolDefinitions, string? systemPrompt);
+public static System.Text.Json.Nodes.JsonObject? ToOpenAI_JsonObject(this DiGi.Harness.Classes.Conversation? conversation, DiGi.Harness.Classes.ProviderConfiguration? providerConfiguration, System.Collections.Generic.IEnumerable<DiGi.Harness.Classes.ToolDefinition>? toolDefinitions, string? systemPrompt, DiGi.Harness.Enums.ToolChoice toolChoice=DiGi.Harness.Enums.ToolChoice.Undefined);
 ```
 #### Parameters
 
-<a name='DiGi.Harness.Convert.ToOpenAI_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string).conversation'></a>
+<a name='DiGi.Harness.Convert.ToOpenAI_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string,DiGi.Harness.Enums.ToolChoice).conversation'></a>
 
 `conversation` [Conversation](DiGi.Harness.Classes.md#DiGi.Harness.Classes.Conversation 'DiGi\.Harness\.Classes\.Conversation')
 
 The conversation\.
 
-<a name='DiGi.Harness.Convert.ToOpenAI_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string).providerConfiguration'></a>
+<a name='DiGi.Harness.Convert.ToOpenAI_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string,DiGi.Harness.Enums.ToolChoice).providerConfiguration'></a>
 
 `providerConfiguration` [ProviderConfiguration](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ProviderConfiguration 'DiGi\.Harness\.Classes\.ProviderConfiguration')
 
 The provider\.
 
-<a name='DiGi.Harness.Convert.ToOpenAI_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string).toolDefinitions'></a>
+<a name='DiGi.Harness.Convert.ToOpenAI_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string,DiGi.Harness.Enums.ToolChoice).toolDefinitions'></a>
 
 `toolDefinitions` [System\.Collections\.Generic\.IEnumerable&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')[ToolDefinition](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ToolDefinition 'DiGi\.Harness\.Classes\.ToolDefinition')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1 'System\.Collections\.Generic\.IEnumerable\`1')
 
 The tools offered to the model, or null for none\.
 
-<a name='DiGi.Harness.Convert.ToOpenAI_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string).systemPrompt'></a>
+<a name='DiGi.Harness.Convert.ToOpenAI_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string,DiGi.Harness.Enums.ToolChoice).systemPrompt'></a>
 
 `systemPrompt` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The system prompt, or null for none\.
+
+<a name='DiGi.Harness.Convert.ToOpenAI_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string,DiGi.Harness.Enums.ToolChoice).toolChoice'></a>
+
+`toolChoice` [ToolChoice](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ToolChoice 'DiGi\.Harness\.Enums\.ToolChoice')
+
+Whether the model may call the tools \(`tool_choice``"auto"` or `"none"`\); [Undefined](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ToolChoice.Undefined 'DiGi\.Harness\.Enums\.ToolChoice\.Undefined') is [Auto](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ToolChoice.Auto 'DiGi\.Harness\.Enums\.ToolChoice\.Auto')\. Ignored when no tools are offered\.
 
 #### Returns
 [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')  
@@ -238,7 +250,7 @@ The provider\.
 
 `body` [System\.Text\.Json\.Nodes\.JsonObject](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.nodes.jsonobject 'System\.Text\.Json\.Nodes\.JsonObject')
 
-The request body built by [ToAnthropic\_JsonObject\(this Conversation, ProviderConfiguration, IEnumerable&lt;ToolDefinition&gt;, string\)](DiGi.Harness.md#DiGi.Harness.Convert.ToAnthropic_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string) 'DiGi\.Harness\.Convert\.ToAnthropic\_JsonObject\(this DiGi\.Harness\.Classes\.Conversation, DiGi\.Harness\.Classes\.ProviderConfiguration, System\.Collections\.Generic\.IEnumerable\<DiGi\.Harness\.Classes\.ToolDefinition\>, string\)') or [ToOpenAI\_JsonObject\(this Conversation, ProviderConfiguration, IEnumerable&lt;ToolDefinition&gt;, string\)](DiGi.Harness.md#DiGi.Harness.Convert.ToOpenAI_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string) 'DiGi\.Harness\.Convert\.ToOpenAI\_JsonObject\(this DiGi\.Harness\.Classes\.Conversation, DiGi\.Harness\.Classes\.ProviderConfiguration, System\.Collections\.Generic\.IEnumerable\<DiGi\.Harness\.Classes\.ToolDefinition\>, string\)')\.
+The request body built by [ToAnthropic\_JsonObject\(this Conversation, ProviderConfiguration, IEnumerable&lt;ToolDefinition&gt;, string, ToolChoice\)](DiGi.Harness.md#DiGi.Harness.Convert.ToAnthropic_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string,DiGi.Harness.Enums.ToolChoice) 'DiGi\.Harness\.Convert\.ToAnthropic\_JsonObject\(this DiGi\.Harness\.Classes\.Conversation, DiGi\.Harness\.Classes\.ProviderConfiguration, System\.Collections\.Generic\.IEnumerable\<DiGi\.Harness\.Classes\.ToolDefinition\>, string, DiGi\.Harness\.Enums\.ToolChoice\)') or [ToOpenAI\_JsonObject\(this Conversation, ProviderConfiguration, IEnumerable&lt;ToolDefinition&gt;, string, ToolChoice\)](DiGi.Harness.md#DiGi.Harness.Convert.ToOpenAI_JsonObject(thisDiGi.Harness.Classes.Conversation,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Classes.ToolDefinition_,string,DiGi.Harness.Enums.ToolChoice) 'DiGi\.Harness\.Convert\.ToOpenAI\_JsonObject\(this DiGi\.Harness\.Classes\.Conversation, DiGi\.Harness\.Classes\.ProviderConfiguration, System\.Collections\.Generic\.IEnumerable\<DiGi\.Harness\.Classes\.ToolDefinition\>, string, DiGi\.Harness\.Enums\.ToolChoice\)')\.
 
 #### Returns
 [System\.Net\.Http\.HttpRequestMessage](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httprequestmessage 'System\.Net\.Http\.HttpRequestMessage')  
@@ -415,7 +427,9 @@ Runs one turn of the agent loop on a conversation whose last message is the user
 
 Events are handed to [func](DiGi.Harness.md#DiGi.Harness.Modify.RunTurnAsync(thisDiGi.Harness.Classes.Conversation,System.Net.Http.HttpClient,DiGi.Harness.Classes.ProviderConfiguration,System.Collections.Generic.IEnumerable_DiGi.Harness.Interfaces.ITool_,DiGi.Harness.Classes.RunOptions,System.Func_DiGi.Harness.Classes.HarnessEvent,System.Threading.CancellationToken,System.Threading.Tasks.Task_,System.Threading.CancellationToken).func 'DiGi\.Harness\.Modify\.RunTurnAsync\(this DiGi\.Harness\.Classes\.Conversation, System\.Net\.Http\.HttpClient, DiGi\.Harness\.Classes\.ProviderConfiguration, System\.Collections\.Generic\.IEnumerable\<DiGi\.Harness\.Interfaces\.ITool\>, DiGi\.Harness\.Classes\.RunOptions, System\.Func\<DiGi\.Harness\.Classes\.HarnessEvent,System\.Threading\.CancellationToken,System\.Threading\.Tasks\.Task\>, System\.Threading\.CancellationToken\)\.func') one at a time, never concurrently. Every step emits [StepStartedEvent](DiGi.Harness.Classes.md#DiGi.Harness.Classes.StepStartedEvent 'DiGi\.Harness\.Classes\.StepStartedEvent') and [UsageEvent](DiGi.Harness.Classes.md#DiGi.Harness.Classes.UsageEvent 'DiGi\.Harness\.Classes\.UsageEvent'); every tool call emits [ToolCallStartedEvent](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ToolCallStartedEvent 'DiGi\.Harness\.Classes\.ToolCallStartedEvent') and [ToolCallCompletedEvent](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ToolCallCompletedEvent 'DiGi\.Harness\.Classes\.ToolCallCompletedEvent'); the turn always ends with [TurnCompletedEvent](DiGi.Harness.Classes.md#DiGi.Harness.Classes.TurnCompletedEvent 'DiGi\.Harness\.Classes\.TurnCompletedEvent'), preceded by [ErrorEvent](DiGi.Harness.Classes.md#DiGi.Harness.Classes.ErrorEvent 'DiGi\.Harness\.Classes\.ErrorEvent') when it failed.
 
-The conversation never ends with an unanswered tool call: tool calls the loop does not run (output cut off, a refusal, the iteration limit, a cancellation) get error results. Tool calls of one step run in parallel and their results go back in one message. A tool input that is not a JSON object, or lacks a property the schema requires, is answered with an error result without running the tool. Results longer than [MaxToolResultCharacters](DiGi.Harness.Classes.md#DiGi.Harness.Classes.RunOptions.MaxToolResultCharacters 'DiGi\.Harness\.Classes\.RunOptions\.MaxToolResultCharacters') are truncated with a note. Only a requested cancellation is rethrown.
+<b>Iteration limit.</b> After [MaxToolIterations](DiGi.Harness.Classes.md#DiGi.Harness.Classes.RunOptions.MaxToolIterations 'DiGi\.Harness\.Classes\.RunOptions\.MaxToolIterations') steps in which the model called tools, it gets one more step (so [Steps](DiGi.Harness.Classes.md#DiGi.Harness.Classes.TurnResult.Steps 'DiGi\.Harness\.Classes\.TurnResult\.Steps') is the limit plus one) with the tools still offered but tool use turned off ([None](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ToolChoice.None 'DiGi\.Harness\.Enums\.ToolChoice\.None')) and [FinalStepPrompt](DiGi.Harness.Constants.md#DiGi.Harness.Constants.Default.FinalStepPrompt 'DiGi\.Harness\.Constants\.Default\.FinalStepPrompt') appended to the system prompt; that request's prompt differs from the cached one. A text answer ends the turn without an error. When that step fails at the provider, or the model calls a tool anyway, the turn ends with [MaxToolIterations](DiGi.Harness.Enums.md#DiGi.Harness.Enums.ErrorCategory.MaxToolIterations 'DiGi\.Harness\.Enums\.ErrorCategory\.MaxToolIterations'); a refusal or a cut-off answer keeps its own category.
+
+The conversation never ends with an unanswered tool call: tool calls the loop does not run (output cut off, a refusal, a tool call in the final step, a cancellation) get error results. Tool calls of one step run in parallel and their results go back in one message. A tool input that is not a JSON object, or lacks a property the schema requires, is answered with an error result without running the tool. Results longer than [MaxToolResultCharacters](DiGi.Harness.Classes.md#DiGi.Harness.Classes.RunOptions.MaxToolResultCharacters 'DiGi\.Harness\.Classes\.RunOptions\.MaxToolResultCharacters') are truncated with a note. Only a requested cancellation is rethrown.
 
 ```csharp
 public static System.Threading.Tasks.Task<DiGi.Harness.Classes.TurnResult> RunTurnAsync(this DiGi.Harness.Classes.Conversation? conversation, System.Net.Http.HttpClient? httpClient, DiGi.Harness.Classes.ProviderConfiguration? providerConfiguration, System.Collections.Generic.IEnumerable<DiGi.Harness.Interfaces.ITool>? tools, DiGi.Harness.Classes.RunOptions? runOptions, System.Func<DiGi.Harness.Classes.HarnessEvent,System.Threading.CancellationToken,System.Threading.Tasks.Task>? func, System.Threading.CancellationToken cancellationToken=default(System.Threading.CancellationToken));

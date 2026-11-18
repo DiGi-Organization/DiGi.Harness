@@ -18,7 +18,8 @@ namespace DiGi.Harness
         /// <summary>
         /// Runs one turn of the agent loop on a conversation whose last message is the user's: requests the model, runs the tools it calls, returns their results, and repeats until the model answers without calling a tool.
         /// <para>Events are handed to <paramref name="func"/> one at a time, never concurrently. Every step emits <see cref="StepStartedEvent"/> and <see cref="UsageEvent"/>; every tool call emits <see cref="ToolCallStartedEvent"/> and <see cref="ToolCallCompletedEvent"/>; the turn always ends with <see cref="TurnCompletedEvent"/>, preceded by <see cref="ErrorEvent"/> when it failed.</para>
-        /// <para>The conversation never ends with an unanswered tool call: tool calls the loop does not run (output cut off, a refusal, the iteration limit, a cancellation) get error results. Tool calls of one step run in parallel and their results go back in one message. A tool input that is not a JSON object, or lacks a property the schema requires, is answered with an error result without running the tool. Results longer than <see cref="RunOptions.MaxToolResultCharacters"/> are truncated with a note. Only a requested cancellation is rethrown.</para>
+        /// <para><b>Iteration limit.</b> After <see cref="RunOptions.MaxToolIterations"/> steps in which the model called tools, it gets one more step (so <see cref="TurnResult.Steps"/> is the limit plus one) with the tools still offered but tool use turned off (<see cref="ToolChoice.None"/>) and <see cref="Constants.Default.FinalStepPrompt"/> appended to the system prompt; that request's prompt differs from the cached one. A text answer ends the turn without an error. When that step fails at the provider, or the model calls a tool anyway, the turn ends with <see cref="ErrorCategory.MaxToolIterations"/>; a refusal or a cut-off answer keeps its own category.</para>
+        /// <para>The conversation never ends with an unanswered tool call: tool calls the loop does not run (output cut off, a refusal, a tool call in the final step, a cancellation) get error results. Tool calls of one step run in parallel and their results go back in one message. A tool input that is not a JSON object, or lacks a property the schema requires, is answered with an error result without running the tool. Results longer than <see cref="RunOptions.MaxToolResultCharacters"/> are truncated with a note. Only a requested cancellation is rethrown.</para>
         /// </summary>
         /// <param name="conversation">The conversation; the turn's messages are appended to it.</param>
         /// <param name="httpClient">The HTTP client used for the model requests.</param>
@@ -68,21 +69,27 @@ namespace DiGi.Harness
             }
             else
             {
+                string errorMessage_MaxToolIterations = string.Concat("The model kept calling tools after ", maxToolIterations.ToString(CultureInfo.InvariantCulture), " steps; the turn was stopped.");
+
+                // After the last tool step the model gets one more request with tool use turned off, so the user gets what was found instead of only an error (DiGi.Harness#6).
+                bool finalStep = false;
+
                 while (true)
                 {
                     if (steps >= maxToolIterations)
                     {
-                        errorCategory = ErrorCategory.MaxToolIterations;
-                        errorMessage = string.Concat("The model kept calling tools after ", maxToolIterations.ToString(CultureInfo.InvariantCulture), " steps; the turn was stopped.");
-                        break;
+                        finalStep = true;
                     }
 
                     steps++;
                     await EmitAsync(new StepStartedEvent(steps, Milliseconds())).ConfigureAwait(false);
 
+                    ToolChoice toolChoice = finalStep ? ToolChoice.None : ToolChoice.Auto;
+                    string? systemPrompt = finalStep ? (string.IsNullOrWhiteSpace(runOptions_Temp.SystemPrompt) ? Constants.Default.FinalStepPrompt : string.Concat(runOptions_Temp.SystemPrompt, "\n\n", Constants.Default.FinalStepPrompt)) : runOptions_Temp.SystemPrompt;
+
                     JsonObject? body = providerConfiguration.Protocol == Protocol.Anthropic
-                        ? conversation.ToAnthropic_JsonObject(providerConfiguration, toolDefinitions, runOptions_Temp.SystemPrompt)
-                        : conversation.ToOpenAI_JsonObject(providerConfiguration, toolDefinitions, runOptions_Temp.SystemPrompt);
+                        ? conversation.ToAnthropic_JsonObject(providerConfiguration, toolDefinitions, systemPrompt, toolChoice)
+                        : conversation.ToOpenAI_JsonObject(providerConfiguration, toolDefinitions, systemPrompt, toolChoice);
 
                     CompletionResult completionResult = await httpClient.CompleteAsync(providerConfiguration, body, (harnessEvent, cancellationToken_Event) => EmitAsync(harnessEvent), stopwatch, cancellationToken).ConfigureAwait(false);
 
@@ -100,6 +107,14 @@ namespace DiGi.Harness
                     {
                         errorCategory = completionResult.ErrorCategory == ErrorCategory.Undefined ? ErrorCategory.UpstreamFault : completionResult.ErrorCategory;
                         errorMessage = completionResult.ErrorMessage ?? "The model provider returned no message.";
+
+                        if (finalStep)
+                        {
+                            Serilog.Modify.Log(Serilog.Enums.LogEventLevel.Warning, "Harness: the tool-less final step failed ({ErrorCategory}: {ErrorMessage}).", errorCategory, errorMessage);
+                            errorCategory = ErrorCategory.MaxToolIterations;
+                            errorMessage = errorMessage_MaxToolIterations;
+                        }
+
                         break;
                     }
 
@@ -124,7 +139,19 @@ namespace DiGi.Harness
 
                     if (toolUseContents.Count == 0)
                     {
+                        if (finalStep && errorCategory == ErrorCategory.Undefined)
+                        {
+                            Serilog.Modify.Log("Harness: the tool budget of {MaxToolIterations} steps was used; the model answered without tools.", maxToolIterations);
+                        }
+
                         break;
+                    }
+
+                    if (finalStep && errorCategory == ErrorCategory.Undefined)
+                    {
+                        // The provider ignored tool_choice: none (some OpenAI-compatible servers do).
+                        errorCategory = ErrorCategory.MaxToolIterations;
+                        errorMessage = errorMessage_MaxToolIterations;
                     }
 
                     if (errorCategory != ErrorCategory.Undefined)

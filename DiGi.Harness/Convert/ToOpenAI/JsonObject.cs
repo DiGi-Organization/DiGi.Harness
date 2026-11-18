@@ -17,8 +17,9 @@ namespace DiGi.Harness
         /// <param name="providerConfiguration">The provider.</param>
         /// <param name="toolDefinitions">The tools offered to the model, or null for none.</param>
         /// <param name="systemPrompt">The system prompt, or null for none.</param>
+        /// <param name="toolChoice">Whether the model may call the tools (<c>tool_choice</c> <c>"auto"</c> or <c>"none"</c>); <see cref="ToolChoice.Undefined"/> is <see cref="ToolChoice.Auto"/>. Ignored when no tools are offered.</param>
         /// <returns>The request body, or null when the conversation or provider is null.</returns>
-        public static JsonObject? ToOpenAI_JsonObject(this Conversation? conversation, ProviderConfiguration? providerConfiguration, IEnumerable<ToolDefinition>? toolDefinitions, string? systemPrompt)
+        public static JsonObject? ToOpenAI_JsonObject(this Conversation? conversation, ProviderConfiguration? providerConfiguration, IEnumerable<ToolDefinition>? toolDefinitions, string? systemPrompt, ToolChoice toolChoice = ToolChoice.Undefined)
         {
             if (conversation is null || providerConfiguration is null)
             {
@@ -156,7 +157,7 @@ namespace DiGi.Harness
                 if (jsonArray_Tools.Count != 0)
                 {
                     result["tools"] = jsonArray_Tools;
-                    result["tool_choice"] = "auto";
+                    result["tool_choice"] = toolChoice == ToolChoice.None ? "none" : "auto";
                 }
             }
 

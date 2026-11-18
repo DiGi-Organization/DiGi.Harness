@@ -10,14 +10,15 @@ namespace DiGi.Harness
     {
         /// <summary>
         /// Builds the body of a streamed Anthropic Messages request (<c>POST /v1/messages</c>) from a conversation.
-        /// <para>The system prompt is one cached text block (<c>cache_control: ephemeral</c>), so the tools and the system prompt form a stable cached prefix. Tools use <c>tool_choice: auto</c> (forced tool choice is rejected by current models). Thinking is <c>{"type":"adaptive","display":"summarized"}</c> when <see cref="ProviderConfiguration.Thinking"/> is set; effort goes to <c>output_config.effort</c>; <c>fallbacks: "default"</c> is sent when <see cref="ProviderConfiguration.AnthropicFallbacks"/> is set. Thinking blocks are replayed unchanged with their signatures.</para>
+        /// <para>The system prompt is one cached text block (<c>cache_control: ephemeral</c>), so the tools and the system prompt form a stable cached prefix. Tools use <c>tool_choice: auto</c>, or <c>tool_choice: none</c> for <see cref="ToolChoice.None"/> (forced tool choice is rejected by current models). Thinking is <c>{"type":"adaptive","display":"summarized"}</c> when <see cref="ProviderConfiguration.Thinking"/> is set; effort goes to <c>output_config.effort</c>; <c>fallbacks: "default"</c> is sent when <see cref="ProviderConfiguration.AnthropicFallbacks"/> is set. Thinking blocks are replayed unchanged with their signatures.</para>
         /// </summary>
         /// <param name="conversation">The conversation.</param>
         /// <param name="providerConfiguration">The provider.</param>
         /// <param name="toolDefinitions">The tools offered to the model, or null for none.</param>
         /// <param name="systemPrompt">The system prompt, or null for none.</param>
+        /// <param name="toolChoice">Whether the model may call the tools; <see cref="ToolChoice.Undefined"/> is <see cref="ToolChoice.Auto"/>. Ignored when no tools are offered.</param>
         /// <returns>The request body, or null when the conversation or provider is null.</returns>
-        public static JsonObject? ToAnthropic_JsonObject(this Conversation? conversation, ProviderConfiguration? providerConfiguration, IEnumerable<ToolDefinition>? toolDefinitions, string? systemPrompt)
+        public static JsonObject? ToAnthropic_JsonObject(this Conversation? conversation, ProviderConfiguration? providerConfiguration, IEnumerable<ToolDefinition>? toolDefinitions, string? systemPrompt, ToolChoice toolChoice = ToolChoice.Undefined)
         {
             if (conversation is null || providerConfiguration is null)
             {
@@ -140,7 +141,7 @@ namespace DiGi.Harness
                 if (jsonArray_Tools.Count != 0)
                 {
                     result["tools"] = jsonArray_Tools;
-                    result["tool_choice"] = new JsonObject { ["type"] = "auto" };
+                    result["tool_choice"] = new JsonObject { ["type"] = toolChoice == ToolChoice.None ? "none" : "auto" };
                 }
             }
 

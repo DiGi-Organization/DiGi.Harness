@@ -15,7 +15,7 @@ namespace DiGi.Harness
         /// <para>Anthropic: <c>{BaseUri}/v1/messages</c> with <c>x-api-key</c>, <c>anthropic-version</c> and, when fallbacks are on, <c>anthropic-beta</c>. OpenAI: <c>{BaseUri}/chat/completions</c> with <c>Authorization: Bearer</c> when a key is configured.</para>
         /// </summary>
         /// <param name="providerConfiguration">The provider.</param>
-        /// <param name="body">The request body built by <see cref="Convert.ToAnthropic_JsonObject(Conversation?, ProviderConfiguration?, System.Collections.Generic.IEnumerable{ToolDefinition}?, string?)"/> or <see cref="Convert.ToOpenAI_JsonObject(Conversation?, ProviderConfiguration?, System.Collections.Generic.IEnumerable{ToolDefinition}?, string?)"/>.</param>
+        /// <param name="body">The request body built by <see cref="Convert.ToAnthropic_JsonObject(Conversation?, ProviderConfiguration?, System.Collections.Generic.IEnumerable{ToolDefinition}?, string?, ToolChoice)"/> or <see cref="Convert.ToOpenAI_JsonObject(Conversation?, ProviderConfiguration?, System.Collections.Generic.IEnumerable{ToolDefinition}?, string?, ToolChoice)"/>.</param>
         /// <returns>The request, or null when the provider is not usable or the body is null.</returns>
         public static HttpRequestMessage? HttpRequestMessage(this ProviderConfiguration? providerConfiguration, JsonObject? body)
         {

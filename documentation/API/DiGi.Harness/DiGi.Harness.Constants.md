@@ -68,6 +68,21 @@ public static class Default
 Inheritance [System\.Object](https://learn.microsoft.com/en-us/dotnet/api/system.object 'System\.Object') → Default
 ### Fields
 
+<a name='DiGi.Harness.Constants.Default.FinalStepPrompt'></a>
+
+## Default\.FinalStepPrompt Field
+
+The instruction appended to the system prompt of the one tool\-less request that follows the last allowed tool step, asking the model to answer from what the tools already returned\.
+
+```csharp
+public const string FinalStepPrompt = "## Tool budget used
+
+The tool budget for this turn is used up and no more tools can be called. Answer the user now, in the language of the question, from the tool results above only: what was found, and what is still unknown or unchecked. Do not invent figures and do not call tools.";
+```
+
+#### Field Value
+[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
+
 <a name='DiGi.Harness.Constants.Default.MaxErrorCharacters'></a>
 
 ## Default\.MaxErrorCharacters Field
@@ -111,7 +126,7 @@ public const int MaxTokens = 16000;
 
 ## Default\.MaxToolIterations Field
 
-The default maximum number of model requests in one turn\.
+The default maximum number of steps in one turn in which the model may call tools\. A model still calling tools after the last of them gets one more request with tool use turned off \([FinalStepPrompt](DiGi.Harness.Constants.md#DiGi.Harness.Constants.Default.FinalStepPrompt 'DiGi\.Harness\.Constants\.Default\.FinalStepPrompt')\), so a turn makes at most this many requests plus one\.
 
 ```csharp
 public const int MaxToolIterations = 12;
