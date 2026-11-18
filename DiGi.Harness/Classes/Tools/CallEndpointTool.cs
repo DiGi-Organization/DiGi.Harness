@@ -15,7 +15,7 @@ namespace DiGi.Harness.Classes
 {
     /// <summary>
     /// The <c>call_endpoint</c> tool: calls one operation of a WebAPI described by an OpenAPI document, with the signed-in user's bearer token.
-    /// <para>Guarded so the model cannot reach anything else: the path must match an operation of the document under <c>pathPrefix</c> (<see cref="Query.PathTemplate(JsonObject?, string?, string?)"/> rejects absolute, protocol-relative and <c>..</c> paths, queries and fragments), the request always goes to the fixed base URI, GET is always allowed, and POST only for path templates on the allowlist. Query values are URL-encoded. A binary response is described, not returned.</para>
+    /// <para>Guarded so the model cannot reach anything else: the path must match an operation of the document under <c>pathPrefix</c> (<see cref="Query.PathTemplate(JsonObject?, string?, string?)"/> rejects absolute, protocol-relative and <c>..</c> paths, queries and fragments), the request always goes to the fixed base URI, GET is always allowed, and POST only for path templates on the allowlist. Query values are URL-encoded. A POST body given as a string holding a JSON object or array is sent as that object or array; any other string is sent as a JSON string. A binary response is described, not returned.</para>
     /// </summary>
     public class CallEndpointTool : ITool
     {
@@ -51,7 +51,7 @@ namespace DiGi.Harness.Classes
         public ToolDefinition ToolDefinition { get; } = new(
             Constants.ToolName.CallEndpoint,
             "Calls one WebAPI endpoint from the API index and returns the HTTP status and the response body (JSON). Use GET for reads; POST works only for the endpoints that allow it. Put query parameters in 'query', never in the path. Prefer narrow requests (one county, a few references) - long results are truncated.",
-            """{"type":"object","properties":{"method":{"type":"string","enum":["GET","POST"],"description":"The HTTP method from the API index."},"path":{"type":"string","description":"The endpoint path from the API index with any {parameter} segments filled in, without a query string."},"query":{"type":"object","description":"Query parameters by name; arrays repeat the parameter.","additionalProperties":{}},"body":{"description":"The JSON request body of a POST endpoint, shaped as its schema requires."}},"required":["method","path"],"additionalProperties":false}""");
+            """{"type":"object","properties":{"method":{"type":"string","enum":["GET","POST"],"description":"The HTTP method from the API index."},"path":{"type":"string","description":"The endpoint path from the API index with any {parameter} segments filled in, without a query string."},"query":{"type":"object","description":"Query parameters by name; arrays repeat the parameter.","additionalProperties":{}},"body":{"description":"The JSON request body of a POST endpoint, shaped as its schema requires: pass the JSON object or array itself, not a string containing JSON."}},"required":["method","path"],"additionalProperties":false}""");
 
         /// <summary>
         /// Calls the endpoint named in the call's input and returns the status and body, or an error result when the call is refused or fails.
@@ -121,7 +121,29 @@ namespace DiGi.Harness.Classes
 
             if (method == "POST")
             {
-                string body = input?["body"]?.ToJsonString() ?? "null";
+                // Models often pass the body as a string holding JSON; sending its ToJsonString() would post a JSON string literal the endpoint cannot bind (DiGi-Organization/DiGi.Harness#5).
+                JsonNode? jsonNode_Body = input?["body"];
+                if (jsonNode_Body is JsonValue jsonValue_Body && jsonValue_Body.TryGetValue(out string? body_String) && body_String is not null)
+                {
+                    string body_Trimmed = body_String.Trim();
+                    if (body_Trimmed.StartsWith('{') || body_Trimmed.StartsWith('['))
+                    {
+                        try
+                        {
+                            JsonNode? jsonNode_Parsed = JsonNode.Parse(body_Trimmed);
+                            if (jsonNode_Parsed is JsonObject or JsonArray)
+                            {
+                                jsonNode_Body = jsonNode_Parsed;
+                            }
+                        }
+                        catch (JsonException)
+                        {
+                            // Not JSON: the string is sent as a JSON string, as for an endpoint taking a string body.
+                        }
+                    }
+                }
+
+                string body = jsonNode_Body?.ToJsonString() ?? "null";
                 httpRequestMessage.Content = new StringContent(body, Encoding.UTF8, "application/json");
             }
 
