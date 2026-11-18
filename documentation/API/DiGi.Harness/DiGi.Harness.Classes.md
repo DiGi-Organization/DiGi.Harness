@@ -9,7 +9,7 @@
 
 The `call_endpoint` tool: calls one operation of a WebAPI described by an OpenAPI document, with the signed\-in user's bearer token\.
 
-Guarded so the model cannot reach anything else: the path must match an operation of the document under `pathPrefix` ([PathTemplate\(this JsonObject, string, string\)](DiGi.Harness.md#DiGi.Harness.Query.PathTemplate(thisSystem.Text.Json.Nodes.JsonObject,string,string) 'DiGi\.Harness\.Query\.PathTemplate\(this System\.Text\.Json\.Nodes\.JsonObject, string, string\)') rejects absolute, protocol-relative and `..` paths, queries and fragments), the request always goes to the fixed base URI, GET is always allowed, and POST only for path templates on the allowlist. Query values are URL-encoded. A binary response is described, not returned.
+Guarded so the model cannot reach anything else: the path must match an operation of the document under `pathPrefix` ([PathTemplate\(this JsonObject, string, string\)](DiGi.Harness.md#DiGi.Harness.Query.PathTemplate(thisSystem.Text.Json.Nodes.JsonObject,string,string) 'DiGi\.Harness\.Query\.PathTemplate\(this System\.Text\.Json\.Nodes\.JsonObject, string, string\)') rejects absolute, protocol-relative and `..` paths, queries and fragments), the request always goes to the fixed base URI, GET is always allowed, and POST only for path templates on the allowlist. Query values are URL-encoded. A POST body given as a string holding a JSON object or array is sent as that object or array; any other string is sent as a JSON string. A binary response is described, not returned.
 
 ```csharp
 public class CallEndpointTool : DiGi.Harness.Interfaces.ITool, DiGi.Harness.Interfaces.IHarnessObject, DiGi.Core.Interfaces.IObject
